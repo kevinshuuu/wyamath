@@ -5,7 +5,7 @@ var path = require('path');
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
 var stylus = require('stylus');
-var question = require('./lib/question');
+var room = require('./lib/room');
 
 app.engine('jade', require('jade').__express);
 app.set('views', './public/views');
@@ -21,53 +21,7 @@ app.use(express.static(__dirname + '/public'));
 var index = require('./routes/index');
 app.use('/', index);
 
-var users = {};
-
-var current_question = question.generateQuestion();
-function generateAndEmitQuestion() {
-  current_question = question.generateQuestion();
-  io.sockets.emit('new question', current_question);
-}
-
-var questionInterval = setInterval(generateAndEmitQuestion, 5000);
-
-io.on('connection', function(socket){
-  console.log('a user connected');
-  socket.emit('connected');
-  socket.emit('new question', current_question);
-  socket.emit('user list', users);
-  socket.on('submit answer', function(data) {
-    if (data.answer == current_question.answer) {
-      users[socket.username] += 1;
-      io.sockets.emit('user list', users);
-
-      socket.emit('correct answer');
-      current_question = question.generateQuestion();
-      io.sockets.emit('new question', current_question);
-
-      clearInterval(questionInterval);
-      questionInterval = setInterval(generateAndEmitQuestion, 5000);
-      io.sockets.emit('submitted answer', {
-        submitted: data.answer, 
-        username: socket.username, 
-        correctness: 'correct'
-      });
-    } else {
-      io.sockets.emit('submitted answer', {
-        submitted: data.answer, 
-        username: socket.username, 
-        correctness: 'incorrect'
-      });
-    }
-  });
-
-  socket.on('set username', function(data) {
-    socket.username = data.username;
-    users[data.username] = 0;
-
-    io.sockets.emit('user list', users);
-  });
-});
+var rooms = new room(io.of('/general'));
 
 http.listen(port, function(){
     console.log('Server listening on port %d', port);
