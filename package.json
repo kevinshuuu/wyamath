@@ -12,5 +12,12 @@
     "path": "^0.4.9",
     "socket.io": "^1.1.0",
     "stylus": "^0.49.1"
+  },
+  "subdomain": "wyamath",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "0.10.x"
   }
 }
