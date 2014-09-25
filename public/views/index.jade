@@ -1,5 +1,9 @@
 extends template
 
 block content
-  h1= title
-  p Welcome to #{message}
+  script(type='text/javascript' src='/javascripts/index.js')
+  include partials/_game
+
+  .right-bar
+    include partials/_scoreboard
+    include partials/_chat

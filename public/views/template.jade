@@ -1,11 +1,14 @@
 doctype html
-html
+html(ng-app="mathApp")
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/site.css')
+    script(type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js')
+    script(type='text/javascript' src='https://cdn.socket.io/socket.io-1.1.0.js')
+    script(type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')
 
   body
     include partials/_navbar
 
-    .container
+    .container(ng-controller="mainController")
       block content

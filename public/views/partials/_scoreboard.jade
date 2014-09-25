@@ -1,0 +1,3 @@
+.scoreboard
+  ul.scores
+    li(ng-repeat="user in users | orderBy:'score':true") {{user.user}} - {{user.score}}
