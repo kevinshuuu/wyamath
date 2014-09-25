@@ -4,7 +4,7 @@ function mainController($scope, $http) {
   $scope.problem = "";
   $scope.status = "";
   $scope.users = [];
-  var socket = io.connect();
+  var socket = io.connect('/general');
 
   socket.on('user list', function(data) {
     var processed_users = []
@@ -17,6 +17,10 @@ function mainController($scope, $http) {
     console.log(processed_users);
     $scope.users = processed_users;
     $scope.$apply();
+  });
+
+  socket.on('connected', function(data) {
+    console.log('connected');
   });
 
   socket.on('new question', function(data) {
@@ -45,14 +49,14 @@ function mainController($scope, $http) {
 
   $('.chat-input').focus(function() {
     if (username === "") {
-      username = escape(prompt('enter a username'));
+      username = S(prompt('enter a username')).stripTags().s;
       socket.emit('set username', {username: username});
     }
   });
 
   $('.chat-input').keyup(function (e) {
     if (e.keyCode == 13) {
-      var answer = escape($('.chat-input').val());
+      var answer = S($('.chat-input').val()).stripTags().s;
       if(answer !== "") {
         socket.emit('submit answer', {answer: answer});
       }
