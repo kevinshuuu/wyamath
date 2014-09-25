@@ -45,14 +45,14 @@ function mainController($scope, $http) {
 
   $('.chat-input').focus(function() {
     if (username === "") {
-      username = prompt('enter a username');
+      username = escape(prompt('enter a username'));
       socket.emit('set username', {username: username});
     }
   });
 
   $('.chat-input').keyup(function (e) {
     if (e.keyCode == 13) {
-      var answer = $('.chat-input').val();
+      var answer = escape($('.chat-input').val());
       if(answer !== "") {
         socket.emit('submit answer', {answer: answer});
       }
