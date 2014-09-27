@@ -1,2 +1,5 @@
-div.navbar
-  p navbar goes here
+nav.navbar
+  ul.navbar-nav.nav
+    li(ng-repeat="room in rooms", ng-class="{active: current_room === room}")
+      a.room-link(href='#') {{room}}
+

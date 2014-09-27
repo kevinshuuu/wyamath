@@ -21,8 +21,25 @@ app.use(express.static(__dirname + '/public'));
 var index = require('./routes/index');
 app.use('/', index);
 
-var rooms = new room(io.of('/general'));
+var rooms = [];
+var room_names = [];
+createRoom('/general');
+createRoom('/general-2');
+createRoom('/general-3');
+createRoom('/general-4');
+
+io.on('connection', function(socket) {
+  socket.emit('room list', {rooms: room_names});
+});
+
 
 http.listen(port, function(){
     console.log('Server listening on port %d', port);
 });
+
+//helpers
+function createRoom(name) {
+  rooms.push(new room(io.of(name)));
+  room_names.push(name);
+  io.sockets.emit('room list', {rooms: room_names});
+}

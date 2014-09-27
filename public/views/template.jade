@@ -3,13 +3,14 @@ html(ng-app="mathApp")
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/site.css')
+    link(rel='stylesheet', href='http://bootswatch.com/slate/bootstrap.min.css')
     script(type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js')
     script(type='text/javascript' src='https://cdn.socket.io/socket.io-1.1.0.js')
     script(type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')
     script(type='text/javascript' src='https://cdn.rawgit.com/jprichardson/string.js/master/lib/string.min.js')
 
-  body
+  body(ng-controller="mainController")
     include partials/_navbar
 
-    .container(ng-controller="mainController")
+    .container-custom
       block content
