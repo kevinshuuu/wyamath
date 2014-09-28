@@ -64,6 +64,7 @@ div.right-bar {
   height: 30%;
   float: left;
   padding: 10px;
+  overflow-y: scroll;
 }
 .scoreboard ul.scores {
   list-style: none;
