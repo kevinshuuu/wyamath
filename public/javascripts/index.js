@@ -32,7 +32,8 @@ function mainController($scope, $http) {
       e.stopPropagation();
 
       console.log('switching');
-      socket.emit('changing rooms', $(this).html());
+      socket.emit('changing rooms', S($(this).html()).stripTags().s);
+      $('.chat-messages-list').html('');
     });
   });
 
