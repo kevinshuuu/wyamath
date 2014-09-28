@@ -70,6 +70,9 @@ div.right-bar {
   padding: 0;
   font-size: 16pt;
 }
+.scoreboard ul.scores li.user-active {
+  font-weight: bold;
+}
 div.game {
   position: absolute;
   height: 100%;
