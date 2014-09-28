@@ -3,20 +3,36 @@ function mainController($scope, $http) {
   var username = "";
   $scope.problem = "";
   $scope.status = "";
-  $scope.users = [];
+  $scope.users_in_room = [];
+  $scope.all_users = [];
+  $scope.rooms = [];
+  $scope.current_room = "";
   var socket = io.connect();
 
   socket.on('user list', function(data) {
     var processed_users = []
-    for (var key in data) {
+    for (var key in data.users_in_room) {
       processed_users.push({
         'user': key,
-        'score': data[key]
+        'score': data.users_in_room[key]
       });
     }
-    console.log(processed_users);
-    $scope.users = processed_users;
+    $scope.users_in_room = processed_users;
+    $scope.all_users = data.all_users;
     $scope.$apply();
+  });
+
+  socket.on('room list', function(data) {
+    $scope.rooms = data.rooms;
+    $scope.current_room = data.current_room;
+    $scope.$apply();
+
+    $('.room-link').unbind().click(function(e) {
+      e.stopPropagation();
+
+      console.log('switching');
+      socket.emit('changing rooms', $(this).html());
+    });
   });
 
   socket.on('new question', function(data) {
@@ -45,14 +61,14 @@ function mainController($scope, $http) {
 
   $('.chat-input').focus(function() {
     if (username === "") {
-      username = escape(prompt('enter a username'));
+      username = S(prompt('enter a username')).stripTags().s;
       socket.emit('set username', {username: username});
     }
   });
 
   $('.chat-input').keyup(function (e) {
     if (e.keyCode == 13) {
-      var answer = escape($('.chat-input').val());
+      var answer = S($('.chat-input').val()).stripTags().s;
       if(answer !== "") {
         socket.emit('submit answer', {answer: answer});
       }
