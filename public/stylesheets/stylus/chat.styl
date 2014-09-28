@@ -22,9 +22,33 @@
           color #48e548
 
   .chat-input-area
+    position absolute
     width 100%
 
-    input
-      width 70%
+    .left-lip, .right-lip, input.chat-input
+      margin-top 6px
+
+    .left-lip, .right-lip
+      height 23px
+      float left
+      border-right 1px solid #bbb
+      bottom 13px
+
+      .blocker
+        position absolute
+        height 18px
+        border-right 1px solid $gray-dark
+
+    input.chat-input
+      background none
+      border none
+      border-bottom 1px solid #bbb
+      padding 1px 5px 1px 5px
+      color #fff
+      float left
+
+      &:focus 
+        outline-width 0
+
     button
-      width 20%
+      margin-left 9px

@@ -50,13 +50,40 @@ div.right-bar {
   color: #48e548;
 }
 .chat .chat-input-area {
+  position: absolute;
   width: 100%;
 }
-.chat .chat-input-area input {
-  width: 70%;
+.chat .chat-input-area .left-lip,
+.chat .chat-input-area .right-lip,
+.chat .chat-input-area input.chat-input {
+  margin-top: 6px;
+}
+.chat .chat-input-area .left-lip,
+.chat .chat-input-area .right-lip {
+  height: 23px;
+  float: left;
+  border-right: 1px solid #bbb;
+  bottom: 13px;
+}
+.chat .chat-input-area .left-lip .blocker,
+.chat .chat-input-area .right-lip .blocker {
+  position: absolute;
+  height: 18px;
+  border-right: 1px solid #3a3f44;
+}
+.chat .chat-input-area input.chat-input {
+  background: none;
+  border: none;
+  border-bottom: 1px solid #bbb;
+  padding: 1px 5px 1px 5px;
+  color: #fff;
+  float: left;
+}
+.chat .chat-input-area input.chat-input:focus {
+  outline-width: 0;
 }
 .chat .chat-input-area button {
-  width: 20%;
+  margin-left: 9px;
 }
 .scoreboard {
   position: relative;
