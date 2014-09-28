@@ -65,6 +65,7 @@ function mainController($scope, $http) {
     if (username === "") {
       username = S(prompt('enter a username')).stripTags().s;
       socket.emit('set username', {username: username});
+      $(this).attr('placeholder', 'answer or chat here...');
     }
   });
 
@@ -76,5 +77,13 @@ function mainController($scope, $http) {
       }
       $('.chat-input').val("");
     }
+  });
+
+  $('.chat-submit').click(function() {
+    var answer = S($('.chat-input').val()).stripTags().s;
+    if(answer !== "") {
+      socket.emit('submit answer', {answer: answer});
+    }
+    $('.chat-input').val("");
   });
 }
