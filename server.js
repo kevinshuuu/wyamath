@@ -59,12 +59,16 @@ io.on('connection', function(socket){
 
   socket.on('changing rooms', function(data) {
     var previous_room = socket.current_room;
-    users_in_room[previous_room][socket.username].active = false;
+    if(socket.username !== undefined)
+      users_in_room[previous_room][socket.username].active = false;
+
     socket.leave(socket.current_room);
     socket.join(data);
     socket.current_room = data;
     socket.current_room_index = rooms.indexOf(data);
-    users_in_room[socket.current_room][socket.username].active = true;
+    if(socket.username !== undefined)
+      users_in_room[socket.current_room][socket.username].active = true;
+
     socket.emit('room list', {
       rooms: rooms, 
       current_room: socket.current_room
@@ -84,7 +88,7 @@ io.on('connection', function(socket){
   socket.on('submit answer', function(data) {
     current_question = question_handlers[socket.current_room_index].current_question;
     if (data.answer == current_question.answer) {
-      users_in_room[socket.current_room][socket.username] += 1;
+      users_in_room[socket.current_room][socket.username].score += 1;
 
       io.to(socket.current_room).emit('user list', {
         users_in_room: users_in_room[socket.current_room],
