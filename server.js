@@ -48,7 +48,7 @@ io.on('connection', function(socket){
   socket.current_room = rooms[0];
   socket.current_room_index = 0;
   socket.emit('new question', question_handlers[socket.current_room_index].current_question);
-  io.emit('user list', {
+  socket.emit('user list', {
     users_in_room: users_in_room[socket.current_room],
     all_users: all_users
   });
@@ -58,57 +58,55 @@ io.on('connection', function(socket){
   });
 
   socket.on('changing rooms', function(data) {
+    var previous_room = socket.current_room;
+    users_in_room[previous_room][socket.username].active = false;
     socket.leave(socket.current_room);
     socket.join(data);
     socket.current_room = data;
     socket.current_room_index = rooms.indexOf(data);
+    users_in_room[socket.current_room][socket.username].active = true;
     socket.emit('room list', {
       rooms: rooms, 
       current_room: socket.current_room
     });
-    io.emit('user list', {
+    io.to(socket.current_room).emit('user list', {
       users_in_room: users_in_room[socket.current_room],
       all_users: all_users
     });
+    io.to(previous_room).emit('user list', {
+      users_in_room: users_in_room[previous_room],
+      all_users: all_users
+    });
+
     socket.emit('new question', question_handlers[socket.current_room_index].current_question);
   });
 
   socket.on('submit answer', function(data) {
     current_question = question_handlers[socket.current_room_index].current_question;
     if (data.answer == current_question.answer) {
-      var current_user = users_in_room[socket.current_room][socket.username];
-      if(current_user === undefined) {
-        users_in_room[socket.current_room][socket.username] = 1;
-      } else {
-        users_in_room[socket.current_room][socket.username] += 1;
-      }
+      users_in_room[socket.current_room][socket.username] += 1;
 
-      io.emit('user list', {
+      io.to(socket.current_room).emit('user list', {
         users_in_room: users_in_room[socket.current_room],
         all_users: all_users
       });
 
       socket.emit('correct answer');
       current_question = question_handlers[socket.current_room_index].generateQuestion();
-      io.emit('new question', current_question);
+      io.to(socket.current_room).emit('new question', current_question);
 
       clearInterval(question_handlers[socket.current_room_index].question_interval);
       question_handlers[socket.current_room_index].question_interval = 
         setInterval(question_handlers[socket.current_room_index].generateAndEmitQuestion, 
           question_handlers[socket.current_room_index].interval_timing);
 
-      io.emit('submitted answer', {
+      io.to(socket.current_room).emit('submitted answer', {
         submitted: data.answer, 
         username: socket.username, 
         correctness: 'correct'
       });
     } else {
-      var current_user = users_in_room[socket.current_room][socket.username];
-      if(current_user === undefined)
-        users_in_room[socket.current_room][socket.username] = 0;
-      
-
-      io.emit('submitted answer', {
+      io.to(socket.current_room).emit('submitted answer', {
         submitted: data.answer, 
         username: socket.username, 
         correctness: 'incorrect'
@@ -118,10 +116,15 @@ io.on('connection', function(socket){
 
   socket.on('set username', function(data) {
     socket.username = data.username;
-    users_in_room[socket.current_room][data.username] = 0;
+    rooms.forEach(function(room) {
+      users_in_room[room][data.username] = { 
+        score: 0,
+        active: room === socket.current_room
+      };
+    });
     all_users.push(data.username);
 
-    io.emit('user list', {
+    io.to(socket.current_room).emit('user list', {
       users_in_room: users_in_room[socket.current_room],
       all_users: all_users
     });

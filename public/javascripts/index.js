@@ -14,7 +14,8 @@ function mainController($scope, $http) {
     for (var key in data.users_in_room) {
       processed_users.push({
         'user': key,
-        'score': data.users_in_room[key]
+        'score': data.users_in_room[key].score,
+        'active': data.users_in_room[key].active
       });
     }
     $scope.users_in_room = processed_users;
