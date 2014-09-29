@@ -1,4 +1,7 @@
-.navbar {
+nav.navbar {
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,0.6);
   position: fixed;
   background-color: #999;
   height: 50px;
@@ -6,68 +9,132 @@
   top: 0;
   left: 0;
 }
-.container {
-  margin-top: 50px;
-  position: relative;
+nav.navbar ul li.active {
+  font-weight: bold;
+  background-color: #3a3f44;
 }
-.right-bar {
-  position: fixed;
+.container-custom {
+  margin-top: 50px;
+}
+body {
+  overflow: hidden;
+}
+.right .github-fork-ribbon {
+  background-color: #777;
+}
+div.right-bar {
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-left-color: #333;
+  background-color: #3a3f44;
+  position: absolute;
   height: 100%;
-  width: 20%;
   right: 0;
-  top: 50px;
+  top: 0;
+  padding: 50px 0 0 0;
+  z-index: -1;
 }
 .chat {
-  background-color: #777;
   position: relative;
   width: 100%;
   height: 70%;
   float: left;
+  padding: 10px;
 }
 .chat .chat-area {
-  position: absolute;
-  height: 87%;
+  height: 95%;
   width: 100%;
   overflow-y: scroll;
+  overflow-x: hidden;
+  font-size: 12pt;
+  border-top: 1px solid #555;
 }
 .chat .chat-area .chat-messages ul.chat-messages-list {
   list-style: none;
   padding: 0;
 }
 .chat .chat-area .chat-messages ul.chat-messages-list li.correct {
-  color: #008000;
+  color: #48e548;
 }
 .chat .chat-input-area {
   position: absolute;
-  bottom: 50px;
   width: 100%;
 }
-.chat .chat-input-area input {
-  width: 70%;
+.chat .chat-input-area .left-lip,
+.chat .chat-input-area .right-lip,
+.chat .chat-input-area input.chat-input {
+  margin-top: 6px;
+}
+.chat .chat-input-area .left-lip,
+.chat .chat-input-area .right-lip {
+  height: 23px;
+  float: left;
+  border-right: 1px solid #bbb;
+  bottom: 13px;
+}
+.chat .chat-input-area .left-lip .blocker,
+.chat .chat-input-area .right-lip .blocker {
+  position: absolute;
+  height: 18px;
+  border-right: 1px solid #3a3f44;
+}
+.chat .chat-input-area input.chat-input {
+  background: none;
+  border: none;
+  border-bottom: 1px solid #bbb;
+  padding: 1px 5px 1px 5px;
+  color: #fff;
+  float: left;
+}
+.chat .chat-input-area input.chat-input:focus {
+  outline-width: 0;
 }
 .chat .chat-input-area button {
-  width: 20%;
+  margin-left: 9px;
 }
 .scoreboard {
-  background-color: #888;
   position: relative;
   width: 100%;
   height: 30%;
   float: left;
+  padding: 10px;
+  overflow-y: scroll;
 }
 .scoreboard ul.scores {
   list-style: none;
   padding: 0;
+  font-size: 16pt;
 }
-.game {
-  position: fixed;
-  height: 100%;
-  width: 80%;
-  left: 0;
-  background-color: #aaa;
+.scoreboard ul.scores li.user-active {
+  font-weight: bold;
 }
-.game .problem {
+div.game {
   position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #272b30;
+  padding: 50px 0 0 0;
+  z-index: -1;
+}
+div.game .problem {
+  font-size: 170pt;
+  text-align: center;
+  position: absolute;
+  width: 1000px;
+  height: 400px;
   top: 50%;
   left: 50%;
+  margin-top: -150px;
+  margin-left: -500px;
+}
+div.game .status {
+  width: 200px;
+  height: 100px;
+  text-align: center;
+  font-size: 50pt;
+  left: 50%;
+  position: absolute;
+  margin-left: -100px;
+  bottom: 200px;
 }

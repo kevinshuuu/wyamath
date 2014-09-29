@@ -1,11 +1,30 @@
-.game
-  position fixed
+@import variables
+div.game
+  position absolute
   height 100%
-  width 80%
+  top 0
   left 0
-  background-color #aaa
+  background-color $gray-darker
+  padding 50px 0 0 0
+  z-index -1
 
   .problem
+    font-size 170pt
+    text-align center
     position absolute
+    width 1000px
+    height 400px
     top 50%
     left 50%
+    margin-top -150px
+    margin-left -500px
+
+  .status
+    width 200px
+    height 100px
+    text-align center
+    font-size 50pt
+    left 50%
+    position absolute
+    margin-left -100px
+    bottom 200px
