@@ -91,7 +91,10 @@ function mainController($scope, $http) {
 
           //tell the server our new username and change the placeholder text
           socket.emit('set username', {username: username});
-          $(this).attr('placeholder', 'answer or chat here...');
+          $(this).attr('placeholder', 'username accepted!');
+          setTimeout(function() {
+            $('.chat-input').attr('placeholder', 'answer or chat here...');
+          }, 1500);
           setting_username = false;
         } else {
 
@@ -127,7 +130,10 @@ function mainController($scope, $http) {
       username = S($('.chat-input').val()).stripTags().s;
       if($scope.all_users.indexOf(username) === -1) {
         socket.emit('set username', {username: username});
-        $('.chat-input').attr('placeholder', 'answer or chat here...');
+        $('.chat-input').attr('placeholder', 'username accepted!');
+        setTimeout(function() {
+          $('.chat-input').attr('placeholder', 'answer or chat here...');
+        }, 1500);
         setting_username = false;
       } else {
         $('.chat-input').attr('placeholder', 'that username is taken!');
@@ -135,7 +141,7 @@ function mainController($scope, $http) {
         username = "";
         setTimeout(function() {
           $('.chat-input').attr('placeholder', 'try a different username');
-        }, 2000);
+        }, 1500);
       }
     } else {
       var answer = S($('.chat-input').val()).stripTags().s;
