@@ -11,11 +11,11 @@ function mainController($scope, $http) {
 
   socket.on('user list', function(data) {
     var processed_users = []
-    for (var key in data.users_in_room) {
+    for (var key in data.users_in_room[$scope.current_room]) {
       processed_users.push({
         'user': key,
-        'score': data.users_in_room[key].score,
-        'active': data.users_in_room[key].active
+        'score': data.users_in_room[$scope.current_room][key].score,
+        'active': data.users_in_room[$scope.current_room][key].active
       });
     }
     $scope.users_in_room = processed_users;
@@ -64,8 +64,14 @@ function mainController($scope, $http) {
   $('.chat-input').focus(function() {
     if (username === "") {
       username = S(prompt('enter a username')).stripTags().s;
-      socket.emit('set username', {username: username});
-      $(this).attr('placeholder', 'answer or chat here...');
+      if($scope.all_users.indexOf(username) === -1) {
+        socket.emit('set username', {username: username});
+        $(this).attr('placeholder', 'answer or chat here...');
+      } else {
+        alert('that name is taken!');
+        username = "";
+        $(this).blur();
+      }
     }
   });
 

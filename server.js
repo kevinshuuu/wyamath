@@ -48,13 +48,25 @@ io.on('connection', function(socket){
   socket.current_room = rooms[0];
   socket.current_room_index = 0;
   socket.emit('new question', question_handlers[socket.current_room_index].current_question);
-  socket.emit('user list', {
-    users_in_room: users_in_room[socket.current_room],
-    all_users: all_users
-  });
   socket.emit('room list', {
     rooms: rooms, 
     current_room: socket.current_room
+  });
+  socket.emit('user list', {
+    users_in_room: users_in_room,
+    all_users: all_users
+  });
+  socket.on('disconnect', function(){
+    delete users_in_room.addition[socket.username];
+    delete users_in_room.subtraction[socket.username];
+    delete users_in_room.multiplication[socket.username];
+    delete users_in_room.division[socket.username];
+    var user_index = all_users.indexOf(socket.username);
+    all_users.splice(user_index, user_index);
+    io.emit('user list', {
+      users_in_room: users_in_room,
+      all_users: all_users
+    });
   });
 
   socket.on('changing rooms', function(data) {
@@ -74,11 +86,11 @@ io.on('connection', function(socket){
       current_room: socket.current_room
     });
     io.to(socket.current_room).emit('user list', {
-      users_in_room: users_in_room[socket.current_room],
+      users_in_room: users_in_room,
       all_users: all_users
     });
     io.to(previous_room).emit('user list', {
-      users_in_room: users_in_room[previous_room],
+      users_in_room: users_in_room,
       all_users: all_users
     });
 
@@ -91,7 +103,7 @@ io.on('connection', function(socket){
       users_in_room[socket.current_room][socket.username].score += 1;
 
       io.to(socket.current_room).emit('user list', {
-        users_in_room: users_in_room[socket.current_room],
+        users_in_room: users_in_room,
         all_users: all_users
       });
 
@@ -128,8 +140,8 @@ io.on('connection', function(socket){
     });
     all_users.push(data.username);
 
-    io.to(socket.current_room).emit('user list', {
-      users_in_room: users_in_room[socket.current_room],
+    io.emit('user list', {
+      users_in_room: users_in_room,
       all_users: all_users
     });
   });
