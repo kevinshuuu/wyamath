@@ -16,6 +16,12 @@ nav.navbar ul li.active {
 .container-custom {
   margin-top: 50px;
 }
+body {
+  overflow: hidden;
+}
+.right .github-fork-ribbon {
+  background-color: #777;
+}
 div.right-bar {
   border-left-style: solid;
   border-left-width: 1px;
@@ -39,6 +45,7 @@ div.right-bar {
   height: 95%;
   width: 100%;
   overflow-y: scroll;
+  overflow-x: hidden;
   font-size: 12pt;
   border-top: 1px solid #555;
 }

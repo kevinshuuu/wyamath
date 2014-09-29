@@ -4,6 +4,7 @@ html(ng-app="mathApp")
     title= title
     link(rel='stylesheet', href='/stylesheets/site.css')
     link(rel='stylesheet', href='http://bootswatch.com/slate/bootstrap.min.css')
+    link(rel='stylesheet', href='http://simonwhitaker.github.io/github-fork-ribbon-css/gh-fork-ribbon.css')
     script(type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js')
     script(type='text/javascript' src='https://cdn.socket.io/socket.io-1.1.0.js')
     script(type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')
@@ -11,6 +12,9 @@ html(ng-app="mathApp")
 
   body(ng-controller="mainController")
     include partials/_navbar
+    .github-fork-ribbon-wrapper.right
+      .github-fork-ribbon
+        a(href='https://github.com/wyaeiga/best-math-game') View on Github
 
     .container-custom
       block content
