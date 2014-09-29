@@ -57,16 +57,18 @@ io.on('connection', function(socket){
     all_users: all_users
   });
   socket.on('disconnect', function(){
-    delete users_in_room.addition[socket.username];
-    delete users_in_room.subtraction[socket.username];
-    delete users_in_room.multiplication[socket.username];
-    delete users_in_room.division[socket.username];
-    var user_index = all_users.indexOf(socket.username);
-    all_users.splice(user_index, 1);
-    io.emit('user list', {
-      users_in_room: users_in_room,
-      all_users: all_users
-    });
+    if(socket.username !== undefined) {
+      delete users_in_room.addition[socket.username];
+      delete users_in_room.subtraction[socket.username];
+      delete users_in_room.multiplication[socket.username];
+      delete users_in_room.division[socket.username];
+      var user_index = all_users.indexOf(socket.username);
+      all_users.splice(user_index, 1);
+      io.emit('user list', {
+        users_in_room: users_in_room,
+        all_users: all_users
+      });
+    }
   });
 
   socket.on('changing rooms', function(data) {
