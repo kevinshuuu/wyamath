@@ -62,7 +62,7 @@ io.on('connection', function(socket){
     delete users_in_room.multiplication[socket.username];
     delete users_in_room.division[socket.username];
     var user_index = all_users.indexOf(socket.username);
-    all_users.splice(user_index, user_index);
+    all_users.splice(user_index, 1);
     io.emit('user list', {
       users_in_room: users_in_room,
       all_users: all_users
