@@ -85,6 +85,8 @@ function mainController($scope, $http) {
       //if setting username
       if(setting_username) {
         username = S($('.chat-input').val()).stripTags().s;
+        if(username === "")
+          return;
 
         //if the username isn't in the list of current users
         if($scope.all_users.indexOf(username) === -1) {
@@ -128,6 +130,9 @@ function mainController($scope, $http) {
   $('.chat-submit').click(function() {
     if(setting_username) {
       username = S($('.chat-input').val()).stripTags().s;
+      if(username === "")
+        return;
+
       if($scope.all_users.indexOf(username) === -1) {
         socket.emit('set username', {username: username});
         $('.chat-input').attr('placeholder', 'username accepted!');
