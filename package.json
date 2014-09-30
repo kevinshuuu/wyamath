@@ -1,7 +1,7 @@
 {
   "name": "best-math-game",
   "description": "The best math game ever",
-  "version": "0.0.0-3",
+  "version": "0.0.0-5",
   "main": "server.js",
   "author": "Kevin Shu",
   "private": "true",
