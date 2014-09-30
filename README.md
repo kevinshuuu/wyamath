@@ -26,8 +26,8 @@ The testing stack uses Mocha + Should.js for back-end testing and Protractor + S
 
 ```
 cd ~/best-math-game
-mocha (after this test suite completes, you can feel free to run the next one)
+mocha
 protractor test/e2e/conf.js
 ```
 
-You might need to set up [Mocha](http://visionmedia.github.io/mocha/#installation) and [Protractor](https://github.com/angular/protractor/blob/master/docs/tutorial.md#setup) first, especially if you don't already have them installed.
+Before you get started, you might need to set up [Mocha](http://visionmedia.github.io/mocha/#installation) and [Protractor](https://github.com/angular/protractor/blob/master/docs/tutorial.md#setup) first, especially if you don't already have them installed. The Selenium webdriver-manager needs to be running for the end-to-end tests to work and of course the actual game server itself needs to be running as well. All of the tests make the assumption that at the time of running the tests, there are no active users in the game (so close or simply refresh the tab to disconnect the socket and don't sign in again as another user until the tests are done running) and that the server is running at `http://localhost:3000/`.
