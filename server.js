@@ -123,7 +123,8 @@ io.on('connection', function(socket){
 
   //on client answer submission
   socket.on('submit answer', function(data) {
-    current_question = question_handlers[socket.current_room_index].current_question;
+    var current_question_handler = question_handlers[socket.current_room_index];
+    current_question = current_question_handler.current_question;
 
     //if the submitted answer is the same as the current question's answer
     if (data.answer == current_question.answer) {
@@ -141,14 +142,14 @@ io.on('connection', function(socket){
       socket.emit('correct answer');
 
       //then regenerate a new question for the room and emit it to all clients of that room
-      current_question = question_handlers[socket.current_room_index].generateQuestion();
+      current_question = current_question_handler.generateQuestion();
       io.to(socket.current_room).emit('new question', current_question);
 
       //and then reset the interval that periodically generates a new question
-      clearInterval(question_handlers[socket.current_room_index].question_interval);
-      question_handlers[socket.current_room_index].question_interval = 
-        setInterval(question_handlers[socket.current_room_index].generateAndEmitQuestion, 
-          question_handlers[socket.current_room_index].interval_timing);
+      clearInterval(current_question_handler.question_interval);
+      current_question_handler.question_interval = 
+        setInterval(current_question_handler.generateAndEmitQuestion, 
+          current_question_handler.interval_timing);
 
       //finally let every client connected know what answer was submitted
       io.to(socket.current_room).emit('submitted answer', {
