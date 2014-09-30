@@ -9,7 +9,7 @@ This application is a basic math trivia game that features four different rooms 
 The navbar at the top of the application allows the users to switch between the four different rooms that are supported. The game panel on the left prominently displays the current question that is open to the current room that the user is in. The scoreboard on the top right lists all of the users who are currently online on the application and emboldens the names of people who are currently in the user's room. The scores are separate from room to room, so a user with ten points in the "addition" room may only have five points in the "subtraction" room if s/he answered five questions correctly there. The chat area in the bottom left serves as a place to keep track of what is going on in the room and as a chat room. Users submit messages to the chat room and messages that are actually correct answers to the current problem will be colored green and points will be awarded to that user. Other messages are colored white and are there to allow the users to talk to each other. The chat area is not preserved when navigating to a new room, so make sure to screenshot any messages you want to save!
 
 ## Running Locally
-The application stack is comprised of an all-JavaScript suite of Node.js, Angular, and Socket.io. To run the application locally, complete the following steps:
+The application stack is comprised of an all-JavaScript suite of **Node.js, Angular, and Socket.io**. To run the application locally, complete the following steps:
 
 ```
 cd ~ (or whatever directory you'd like)
