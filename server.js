@@ -166,7 +166,6 @@ io.on('connection', function(socket){
         correctness: 'incorrect'
       });
     }
-    console.log(data);
   });
 
   //on setting a username
