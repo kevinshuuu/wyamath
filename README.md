@@ -1,6 +1,6 @@
 Best Math Game
 ==============
-[Find this application on Nodejitsu!](http://wyamath.herokuapp.com)
+[Find this application on Heroku](http://wyamath.herokuapp.com)
 ![game-screen](http://puu.sh/bTKU7/d96146cb12.png)
 
 ## Overview
