@@ -38,7 +38,6 @@ function mainController($scope, $http) {
     $('.room-link').unbind().click(function(e) {
       e.stopPropagation();
 
-      console.log('switching');
       socket.emit('changing rooms', S($(this).html()).stripTags().s);
       $('.chat-messages-list').html('');
     });
